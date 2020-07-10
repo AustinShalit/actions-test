@@ -27,3 +27,14 @@ jobs:
           name: output-${{ matrix.python-version }}
           path: version.txt
 
+  combine:
+    name: combine
+    needs: [matrix-job]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+      - run: cat **/*.txt > all.txt
+      - uses: actions/upload-artifact@v1
+        with:
+          name: all
+          path: all.txt
