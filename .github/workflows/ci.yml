@@ -9,32 +9,11 @@ on:
       - '**'
 
 jobs:
-  matrix-job:
+  test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.5, 3.6, 3.7, 3.8]
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Save version to file
-        run: python --version >> version.txt
-      - uses: actions/upload-artifact@v1
-        with:
-          name: output-${{ matrix.python-version }}
-          path: version.txt
+      - name: home
+        run: echo $HOME
+      - name: home
+        run: cd ~/ && echo $(pwd)
 
-  combine:
-    name: combine
-    needs: [matrix-job]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v2
-      - run: cat **/*.txt > all.txt
-      - uses: actions/upload-artifact@v1
-        with:
-          name: all
-          path: all.txt
