@@ -12,8 +12,12 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: home
-        run: echo $HOME
-      - name: home
-        run: cd ~/ && echo $(pwd)
+      - name: create dir
+        run: mkdir ~/releases
+      - name: touch file
+        run: echo Hello >> ~/releases/hi.txt
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Maven
+          path: ~/releases
 
