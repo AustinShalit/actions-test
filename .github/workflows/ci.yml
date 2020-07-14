@@ -1,6 +1,7 @@
 name: CI
 
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - '**'
@@ -12,12 +13,5 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: create dir
-        run: mkdir ~/releases
-      - name: touch file
-        run: echo Hello >> ~/releases/hi.txt
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Maven
-          path: ~/releases
-
+      - name: Say hi
+        run: echo Hello
