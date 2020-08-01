@@ -13,7 +13,5 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Turnstyle
-        uses: softprops/turnstyle@v1
-      - name: Say hi
-        run: sleep 60 && echo Hello
+      - name: Test
+        run: echo ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
