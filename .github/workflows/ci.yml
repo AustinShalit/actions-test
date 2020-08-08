@@ -1,17 +1,23 @@
 name: CI
 
-on:
-  workflow_dispatch:
-  pull_request:
-    branches:
-      - '**'
-  push:
-    branches:
-      - '**'
+on: [workflow_dispatch, pull_request, push]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Test
-        run: echo ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+      - name: Combine
+        if: |
+          !startsWith(github.ref, 'refs/tags/v') &&
+          github.ref != 'refs/heads/master'
+        run: echo General
+      - name: Combine (Master)
+        if: |
+          github.repository_owner == 'AustinShalit' &&
+          github.ref == 'refs/heads/master'
+        run: echo Master
+      - name: Combine (Release)
+        if: |
+          github.repository_owner == 'AustinShalit' &&
+          startsWith(github.ref, 'refs/tags/v')
+        run: echo Release
