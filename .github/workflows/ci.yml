@@ -1,23 +1,11 @@
 name: CI
 
-on: [workflow_dispatch, pull_request, push]
+on: [pull_request, push]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Combine
-        if: |
-          !startsWith(github.ref, 'refs/tags/v') &&
-          github.ref != 'refs/heads/master'
-        run: echo General
-      - name: Combine (Master)
-        if: |
-          github.repository_owner == 'AustinShalit' &&
-          github.ref == 'refs/heads/master'
-        run: echo Master
-      - name: Combine (Release)
-        if: |
-          github.repository_owner == 'AustinShalit' &&
-          startsWith(github.ref, 'refs/tags/v')
-        run: echo Release
+      - uses: actions/checkout@v2
+      - run: date >> README.md
+      - uses: austinshalit/suggest-diff@dev
