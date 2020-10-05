@@ -11,4 +11,4 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         issue-close-message: "@${issue.user.login} this pull request was automatically closed because it looks like you meant to open it elsewhere."
-        issue-pattern: "Before issuing a pull request, please see the contributing page."
+        issue-pattern: "^((?!Before issuing a pull request, please see the contributing page).)*$"
