@@ -10,5 +10,5 @@ jobs:
       uses: roots/issue-closer@v1.1
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        pr-close-message: "@${pull_request.sender.login} this pull request was automatically closed because it looks like you meant to open it elsewhere."
+        pr-close-message: "@${pull_request.user.login} this pull request was automatically closed because it looks like you meant to open it elsewhere."
         pr-pattern: "^((?!Before issuing a pull request, please see the contributing page).)*$"
