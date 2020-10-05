@@ -7,10 +7,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java-version: [8, 9, 10, 11, 12, 13]
-        package: [jre, jdk]
-        os: [ubuntu-latest]
-        # os: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, macos-latest, windows-2016, windows-2019]
+        java-version: [8, 11]
+        package: [jdk]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         
     runs-on: ${{ matrix.os }}
     steps:
