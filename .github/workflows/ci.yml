@@ -3,7 +3,12 @@ name: CI
 on: [push]
 
 jobs:
-  test:   
-    runs-on: ubuntu-latest
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
-      - run: echo ${{ JSON.stringify(github.event) }}
+      - uses: actions/checkout@v2
+      - run: shasum -a 256 README.md
