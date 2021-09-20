@@ -3,11 +3,28 @@ name: CI
 on: [push, workflow_dispatch]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: shasum -a 256 README.md
-        if: env.PUBLISH_STABLE == 'true'
+      - run: echo "This is a" > a.txt
+      - run: echo "This is b" > b.txt
+      - run: echo "This is c" > c.txt
+      - uses: actions/upload-artifact@v2
+        with:
+          name: JRE
+          path: |
+            *.txt
+
+  release-github:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+      - name: Create GitHub Release
+        run: gh release create "${GITHUB_REF#refs/tags/}" JRE/*
         env:
-          PUBLISH_STABLE: ${{ secrets.PUBLISH_STABLE }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
